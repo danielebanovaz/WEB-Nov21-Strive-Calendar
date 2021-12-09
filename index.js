@@ -35,6 +35,7 @@ let calendarData = { }
 
 
 window.onload = function() {
+    readDataFromDisk()
     createDays()
 }
 
@@ -116,6 +117,9 @@ const createNewMeeting = function() {
     const meetingsForTheDay = getMeetingsForTheCurrentlySelectedDay()
     meetingsForTheDay.push(meeting)
 
+    // We save the updated data to the DISK (local storage)
+    saveDataToTheDisk()
+
     // Display the updated meetings for the selected day
     displayMeetingsForTheSelectedDay()
 }
@@ -155,5 +159,28 @@ const displayMeetingsForTheSelectedDay = function() {
 
         // We display the newly created meeting by appending it to the UL
         meetingsContainerNode.appendChild(newMeetingListItemNode)
+    }
+}
+
+const saveDataToTheDisk = function() {
+
+    // We have to convert our 'calendarData' OBJECT into a STRING
+    const json = JSON.stringify(calendarData)
+
+    // We save our serialized JSON string to the LOCAL STORAGE
+    localStorage.setItem("strive-calendar-data", json)
+}
+
+const readDataFromDisk = function() {
+
+    // Read saved data from the local storage
+    const json = localStorage.getItem("strive-calendar-data")
+
+    if (json === null){
+        // The very first time we load the application, there would be no saved data for our calendar
+        calendarData = { }
+    } else {
+        // We parse the JSON string back to a real OBJECT
+        calendarData = JSON.parse(json)
     }
 }
