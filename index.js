@@ -54,3 +54,27 @@ const selectDay = function(e) {
     // Set its class to be 'selected'
     clickedDayNode.classList.add("selected")
 }
+
+const createNewMeeting = function() {
+
+    // Make sure that we actually selected a day
+    if (getCurrentlySelectedDay() === null) {
+        alert("You have to select a day first!")
+        return
+    }
+
+    // Read the user input (so the values of time, description)
+    const meetingTime = document.getElementById("meeting-time").value
+    const meetingDescription = document.getElementById("meeting-description").value
+
+    // We joint the input in a more human readable string
+    const meeting = meetingTime + "] " + meetingDescription
+
+    // We create a new meeting LI based on that data
+    const newMeetingListItemNode = document.createElement("li")
+    newMeetingListItemNode.innerText = meeting
+
+    // We display the newly created meeting by appending it to the UL
+    const meetingsContainerNode = document.getElementById("meetings-for-the-day")
+    meetingsContainerNode.appendChild(newMeetingListItemNode)
+}
