@@ -1,4 +1,8 @@
 
+window.onload = function() {
+    createDays()
+}
+
 const createDays = function() {
 
     // Find the parent for the days (= month container)
@@ -19,8 +23,4 @@ const createDays = function() {
         // ...and we attach it as the last child of the month container
         monthContainerNode.appendChild(newDayNode)
     }
-}
-
-window.onload = function() {
-    createDays()
 }
