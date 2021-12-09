@@ -31,12 +31,7 @@ HOW DO WE MODEL THEM:
 // 2. when we collect user input to create a new meeting, we should update this calendarData accordingly
 
 
-let calendarData = {
-    "2": [ { time: "09:00", description: "Live lecture" }, { time: "14:30", description: "Recap session" } ],
-    "6": [ { time: "09:00", description: "Live lecture" } ],
-    "15": [ ],
-    "23": [ { time: "17:00", description: "Debrief" } ],
-}
+let calendarData = { }
 
 
 window.onload = function() {
@@ -131,6 +126,11 @@ const getMeetingsForTheCurrentlySelectedDay = function() {
 
     const selectedDayNumber = currentlySelectedDayNode.innerText
     let meetingsForTheSelectedDay = calendarData[selectedDayNumber]
+
+    if (meetingsForTheSelectedDay === undefined) {
+        meetingsForTheSelectedDay = []
+        calendarData[selectedDayNumber] = meetingsForTheSelectedDay
+    }
 
     return meetingsForTheSelectedDay;
 }
