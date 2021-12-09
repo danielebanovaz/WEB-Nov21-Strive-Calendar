@@ -110,7 +110,19 @@ const createNewMeeting = function() {
     const meetingTime = document.getElementById("meeting-time").value
     const meetingDescription = document.getElementById("meeting-description").value
 
-    // TODO: we still need to somehow link our newly created meeting with the selected day
+    // We link our newly created meeting with the selected day
+    // -- We create a new object to represent the new meeting
+    const meeting = {
+        time: meetingTime,
+        description: meetingDescription
+    }
+
+    // -- We add the newly created meeting object to the array for that day
+    const meetingsForTheDay = getMeetingsForTheCurrentlySelectedDay()
+    meetingsForTheDay.push(meeting)
+
+    // Display the updated meetings for the selected day
+    displayMeetingsForTheSelectedDay()
 }
 
 const getMeetingsForTheCurrentlySelectedDay = function() {
