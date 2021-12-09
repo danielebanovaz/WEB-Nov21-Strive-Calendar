@@ -1,3 +1,43 @@
+/* ----------------------- STRUCTURING THE DATA WE ARE DEALING WITH -----------------------
+
+ENTITIES WE ARE DEALING WITH:
+- MEETINGS (time, description)
+- DAYS (currently a day is identified by its 'day number'... maybe in the future we will expand that to also consider month and year)
+- CALENDAR (will contain all existing days)
+
+HOW THEY ARE CONNECTED TO EACH OTHER (what are the RELATIONSHIPS between them)
+- We have 0 to MANY different MEETINGS for each DAY
+-> Every DAY will have a COLLECTION of several MEETINGS
+- We have 0 to MANY different DAYS in our CALENDAR
+
+HOW DO WE MODEL THEM:
+- MEETING: we can use an OBJECT -> { time: "09:00", description: "Live lecture" }
+- DAY: we can use an ARRAY -> [ { time: "09:00", description: "Live lecture" }, { time: "14:30", description: "Recap session" } ]
+- CALENDAR: we could use an ARRAY, but the most versatile alternative would be using an OBJECT -> {
+    "2021-12-02": [ { time: "09:00", description: "Live lecture" }, { time: "14:30", description: "Recap session" } ],
+    "2021-12-15": [ { time: "09:00", description: "Live lecture" } ],
+    "2021-12-25": [ ],
+    "2022-01-03": [ { time: "17:00", description: "Debrief" } ],
+}
+
+*/
+
+// TODO: we first work on a TEMPLATE, some BLUEPRINTS for HOW we want to structure our data
+// This is some FAKE data
+
+// We still need to properly organize the user input so that we can shape it into our structured data
+// For doing so, we need to:
+// 1. we should show only the actual meeting data for the selected day in the meetings list
+// 2. when we collect user input to create a new meeting, we should update this calendarData accordingly
+
+
+let calendarData = {
+    2: [ { time: "09:00", description: "Live lecture" }, { time: "14:30", description: "Recap session" } ],
+    6: [ { time: "09:00", description: "Live lecture" } ],
+    15: [ ],
+    23: [ { time: "17:00", description: "Debrief" } ],
+}
+
 
 window.onload = function() {
     createDays()
@@ -77,4 +117,6 @@ const createNewMeeting = function() {
     // We display the newly created meeting by appending it to the UL
     const meetingsContainerNode = document.getElementById("meetings-for-the-day")
     meetingsContainerNode.appendChild(newMeetingListItemNode)
+
+    // TODO: we still need to somehow link our newly created meeting with the selected day
 }
