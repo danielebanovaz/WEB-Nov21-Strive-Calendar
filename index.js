@@ -32,10 +32,10 @@ HOW DO WE MODEL THEM:
 
 
 let calendarData = {
-    2: [ { time: "09:00", description: "Live lecture" }, { time: "14:30", description: "Recap session" } ],
-    6: [ { time: "09:00", description: "Live lecture" } ],
-    15: [ ],
-    23: [ { time: "17:00", description: "Debrief" } ],
+    "2": [ { time: "09:00", description: "Live lecture" }, { time: "14:30", description: "Recap session" } ],
+    "6": [ { time: "09:00", description: "Live lecture" } ],
+    "15": [ ],
+    "23": [ { time: "17:00", description: "Debrief" } ],
 }
 
 
@@ -93,6 +93,9 @@ const selectDay = function(e) {
 
     // Set its class to be 'selected'
     clickedDayNode.classList.add("selected")
+
+    // Display the meetings for the newly selected day
+    displayMeetingsForTheSelectedDay()
 }
 
 const createNewMeeting = function() {
@@ -107,16 +110,38 @@ const createNewMeeting = function() {
     const meetingTime = document.getElementById("meeting-time").value
     const meetingDescription = document.getElementById("meeting-description").value
 
-    // We joint the input in a more human readable string
-    const meeting = meetingTime + "] " + meetingDescription
-
-    // We create a new meeting LI based on that data
-    const newMeetingListItemNode = document.createElement("li")
-    newMeetingListItemNode.innerText = meeting
-
-    // We display the newly created meeting by appending it to the UL
-    const meetingsContainerNode = document.getElementById("meetings-for-the-day")
-    meetingsContainerNode.appendChild(newMeetingListItemNode)
-
     // TODO: we still need to somehow link our newly created meeting with the selected day
+}
+
+const getMeetingsForTheCurrentlySelectedDay = function() {
+
+    const currentlySelectedDayNode = getCurrentlySelectedDay()
+
+    const selectedDayNumber = currentlySelectedDayNode.innerText
+    let meetingsForTheSelectedDay = calendarData[selectedDayNumber]
+
+    return meetingsForTheSelectedDay;
+}
+
+const displayMeetingsForTheSelectedDay = function() {
+
+    // Get the meetings for the currently selected day
+    const meetingsForTheDay = getMeetingsForTheCurrentlySelectedDay()
+
+    // Find the UL container for the meetings LI
+    const meetingsContainerNode = document.getElementById("meetings-for-the-day")
+
+    // We clear out any existing content inside of the UL
+    meetingsContainerNode.innerHTML = ""
+
+    // Create a LI for every meeting associated with the selected day
+    for (let meeting of meetingsForTheDay) {
+
+        // We create a new meeting LI based on that data
+        const newMeetingListItemNode = document.createElement("li")
+        newMeetingListItemNode.innerText = meeting.time + "] " + meeting.description
+
+        // We display the newly created meeting by appending it to the UL
+        meetingsContainerNode.appendChild(newMeetingListItemNode)
+    }
 }
